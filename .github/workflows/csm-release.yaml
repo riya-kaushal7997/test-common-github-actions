@@ -86,30 +86,3 @@ jobs:
           done
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
-
-      - name: Create Release
-        id: release_notes
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: v${{ github.event.inputs.version }}
-          name: Release v${{ github.event.inputs.version }}
-          draft: true
-          prerelease: false
-          generate_release_notes: true
-          make_latest: true
-          body: |
-            ## Documentation
-            [General Documentation](https://dell.github.io/csm-docs/docs/)
-
-            ### Change Log
-            See the [CHANGELOG](https://github.com/dell/csm/blob/release-v1.12.0/CHANGELOG/CHANGELOG-1.12.0.md) for more details.
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Create release branch
-        run: |
-          git config --global user.name 'github-actions'
-          git config --global user.email 'github-actions@github.com'
-          git checkout -b release/v${{ github.event.inputs.version }}
-          git push origin release/v${{ github.event.inputs.version }}
